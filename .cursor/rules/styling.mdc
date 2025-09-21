@@ -1,0 +1,24 @@
+---
+description: Guide to the styling conventions used in the Card Swipe App.
+globs: *.html
+---
+# 🎨 Styling Conventions
+
+This project uses embedded CSS within `<style>` tags in each HTML file.
+
+## 📏 General Rules:
+-   **Universal Reset**: `* { margin: 0; padding: 0; box-sizing: border-box; }` is applied for consistent rendering across browsers.
+-   **Full Height Layout**: `body` elements are set to `height: 100vh; overflow: hidden;` to ensure full viewport coverage and prevent unwanted scrolling.
+-   **Centering**: Flexbox (`display: flex; align-items: center; justify-content: center;`) is consistently used for centering content both vertically and horizontally.
+-   **Transitions**: Smooth UI interactions are achieved using `transition: all 0.3s ease;` for elements that change state (e.g., buttons, cards).
+
+## 🏷️ Naming & Structure:
+-   **Descriptive Class Names**: CSS classes are descriptive and reflect the purpose of the element (e.g., `input-screen`, `input-button`, `card-container`, `card-suit`).
+-   **Card Specific Styles**:
+    -   `.card` class defines the general appearance of a card (e.g., `border-radius`, `box-shadow`).
+    -   `.card.visible`, `.card.hidden`, `.card.prev`, `.card.next` handle card visibility and slide animations.
+    -   `.spades`, `.hearts`, `.clubs`, `.diamonds` classes are used to apply specific colors to card suits.
+
+## 💡 Best Practices:
+-   Avoid inline styles; prefer using CSS classes.
+-   Keep related styles grouped together within the `<style>` block of the respective HTML file.

@@ -1,0 +1,31 @@
+---
+description: Guide to the overall architecture and file structure of the Card Swipe App.
+alwaysApply: true
+---
+# 🏛️ Card Swipe App Architecture & Structure
+
+This project implements a simple card swipe application using a multi-page client-side architecture.
+
+## 🎯 Main Components & Their Roles:
+-   **[index.html](mdc:index.html)**: The main entry point and navigation page. It allows users to choose between the input and result screens and configure their URLs.
+-   **[input.html](mdc:input.html)**: The dedicated screen for receiving swipe inputs based on the clock face method.
+-   **[input.js](mdc:input.js)**: Contains the JavaScript logic for handling swipe gestures, decoding card patterns, and storing the result in `localStorage`.
+-   **[result.html](mdc:result.html)**: The dedicated screen for displaying the card results. It shows a large card image and allows swiping to navigate a predefined deck.
+-   **[result.js](mdc:result.js)**: Contains the JavaScript logic for rendering cards, handling navigation through the deck, retrieving input results from `localStorage`, and reacting to `localStorage` changes.
+
+## 🔗 Communication Between Pages:
+-   State management and communication between `input.html` and `result.html` are handled via **`localStorage`**.
+-   `input.js` saves the decoded card to `localStorage` (key: `selectedCard`).
+-   `result.js` reads from `localStorage` on page load and listens for `storage` events to update without a full reload.
+
+## 📂 Directory Structure:
+The project uses a flat directory structure, with all HTML and JavaScript files in the root.
+```
+cardchange/
+├── index.html
+├── input.html
+├── input.js
+├── result.html
+├── result.js
+└── script.js (Potentially unused or legacy file)
+```

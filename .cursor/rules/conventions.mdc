@@ -1,0 +1,32 @@
+---
+description: Guide to JavaScript coding conventions and patterns used in the Card Swipe App.
+globs: *.js
+---
+# 📝 JavaScript Coding Conventions & Patterns
+
+This project utilizes vanilla JavaScript (ES6+) following an object-oriented approach for better organization and maintainability.
+
+## 📦 Main Concepts:
+-   **Classes**: Application logic for each distinct screen (`input.js` and `result.js`) is encapsulated within ES6 `class` constructs (e.g., `CardInputApp`, `CardResultApp`).
+-   **Initialization**: Each class typically has:
+    -   A `constructor()` to get DOM element references and initialize instance variables.
+    -   An `init()` method (called from the constructor) to set up event listeners and perform initial rendering.
+-   **Event Handling**:
+    -   Standard DOM `addEventListener` is used for handling user interactions (click, touchstart, touchmove, touchend, mousedown, mousemove, mouseup).
+    -   `{ passive: false }` is used for touch events where `e.preventDefault()` is necessary for custom swipe logic.
+-   **State Management (Client-side)**:
+    -   `localStorage` is the primary mechanism for persisting data across page reloads and for inter-page communication.
+    -   `input.js` stores the `selectedCard` in `localStorage`.
+    -   `result.js` retrieves `selectedCard` on `DOMContentLoaded` and listens for `storage` events to react to changes from other tabs/windows without a page reload.
+
+## ✍️ Coding Style:
+-   **CamelCase**: Variables, functions, and class names follow `camelCase` (e.g., `currentCardIndex`, `handleTouchStart`).
+-   **Descriptive Naming**: Names are chosen to clearly indicate their purpose.
+-   **Debugging**: Extensive use of `console.log` and `console.warn` statements for tracing execution flow and debugging purposes. These should be removed or minimized in a production environment.
+-   **DOM Manipulation**: Direct DOM manipulation is used (e.g., `document.getElementById`, `element.classList`, `element.style`, `element.textContent`, `element.innerHTML`).
+-   **No External Libraries**: The project is built without relying on any third-party JavaScript libraries or frameworks.
+
+## 🃏 Swipe Logic Specifics:
+-   **Swipe Detection**: `deltaX`, `deltaY`, and `minSwipeDistance` are used to determine swipe direction and validity.
+-   **Card Decoding**: `decodeSwipeSequence` (3 swipes total) and `decodeValue` (2 swipes for value) functions implement the custom clock-face swipe logic.
+-   **Special Patterns**: Specific 3-swipe patterns for Joker (e.g., `LEFT + RIGHT + LEFT`) and 2-swipe patterns for King (e.g., `UP + DOWN` or `DOWN + UP`) are handled.
