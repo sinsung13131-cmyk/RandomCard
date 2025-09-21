@@ -107,12 +107,33 @@ class CardResultApp {
         else if (card.value === 'J') displayValue = 'J';
         else if (card.value === 'Q') displayValue = 'Q';
         else if (card.value === 'K') displayValue = 'K';
-        else if (card.value === 'JOKER') displayValue = '🃏';
+        else if (card.value === 'JOKER') displayValue = 'JOKER';
         
-        cardDiv.innerHTML = `
-            <div>${displayValue}</div>
-            <div class="card-suit">${this.getSuitSymbol(card.suit)}</div>
-        `;
+        const suitSymbol = this.getSuitSymbol(card.suit);
+        
+        if (card.suit === 'joker') {
+            cardDiv.innerHTML = `
+                <div class="card-corner top-left">
+                    <div>JOKER</div>
+                </div>
+                <div class="card-corner bottom-right">
+                    <div>JOKER</div>
+                </div>
+                <div class="card-center">🃏</div>
+            `;
+        } else {
+            cardDiv.innerHTML = `
+                <div class="card-corner top-left">
+                    <div>${displayValue}</div>
+                    <div class="card-corner-suit">${suitSymbol}</div>
+                </div>
+                <div class="card-corner bottom-right">
+                    <div>${displayValue}</div>
+                    <div class="card-corner-suit">${suitSymbol}</div>
+                </div>
+                <div class="card-center">${suitSymbol}</div>
+            `;
+        }
         
         return cardDiv;
     }
