@@ -1,8 +1,9 @@
 class CardResultApp {
     constructor() {
-        this.inputModeButton = document.getElementById('inputModeButton');
         this.cardContainer = document.getElementById('cardContainer');
         this.deckInfo = document.getElementById('deckInfo');
+        this.prevButton = document.getElementById('prevButton');
+        this.nextButton = document.getElementById('nextButton');
         
         this.currentCardIndex = 0;
         this.deck = [];
@@ -39,7 +40,9 @@ class CardResultApp {
     }
 
     setupEventListeners() {
-        this.inputModeButton.addEventListener('click', () => this.goToInput());
+        // Navigation button event listeners
+        this.prevButton.addEventListener('click', () => this.previousCard());
+        this.nextButton.addEventListener('click', () => this.nextCard());
         
         // Listen for localStorage changes from other tabs/windows
         window.addEventListener('storage', (event) => {
@@ -83,9 +86,6 @@ class CardResultApp {
         }
     }
 
-    goToInput() {
-        window.location.href = 'input.html';
-    }
 
     renderCards() {
         this.cardContainer.innerHTML = '';
@@ -96,6 +96,7 @@ class CardResultApp {
         this.cardContainer.appendChild(cardElement);
         
         this.updateDeckInfo();
+        this.updateNavigationButtons();
     }
 
     createCardElement(card) {
@@ -114,10 +115,10 @@ class CardResultApp {
         if (card.suit === 'joker') {
             cardDiv.innerHTML = `
                 <div class="card-corner top-left">
-                    <div>JOKER</div>
+                    <div class="card-corner-value">JOKER</div>
                 </div>
                 <div class="card-corner bottom-right">
-                    <div>JOKER</div>
+                    <div class="card-corner-value">JOKER</div>
                 </div>
                 <div class="card-center">🃏</div>
             `;
@@ -125,11 +126,11 @@ class CardResultApp {
             // Ace - single large symbol in center
             cardDiv.innerHTML = `
                 <div class="card-corner top-left">
-                    <div>${displayValue}</div>
+                    <div class="card-corner-value">${displayValue}</div>
                     <div class="card-corner-suit">${suitSymbol}</div>
                 </div>
                 <div class="card-corner bottom-right">
-                    <div>${displayValue}</div>
+                    <div class="card-corner-value">${displayValue}</div>
                     <div class="card-corner-suit">${suitSymbol}</div>
                 </div>
                 <div class="ace-center">${suitSymbol}</div>
@@ -139,11 +140,11 @@ class CardResultApp {
             const faceSymbol = this.getFaceCardSymbol(card.value);
             cardDiv.innerHTML = `
                 <div class="card-corner top-left">
-                    <div>${displayValue}</div>
+                    <div class="card-corner-value">${displayValue}</div>
                     <div class="card-corner-suit">${suitSymbol}</div>
                 </div>
                 <div class="card-corner bottom-right">
-                    <div>${displayValue}</div>
+                    <div class="card-corner-value">${displayValue}</div>
                     <div class="card-corner-suit">${suitSymbol}</div>
                 </div>
                 <div class="face-card">${faceSymbol}</div>
@@ -153,11 +154,11 @@ class CardResultApp {
             const pipPattern = this.generatePipPattern(parseInt(card.value), suitSymbol);
             cardDiv.innerHTML = `
                 <div class="card-corner top-left">
-                    <div>${displayValue}</div>
+                    <div class="card-corner-value">${displayValue}</div>
                     <div class="card-corner-suit">${suitSymbol}</div>
                 </div>
                 <div class="card-corner bottom-right">
-                    <div>${displayValue}</div>
+                    <div class="card-corner-value">${displayValue}</div>
                     <div class="card-corner-suit">${suitSymbol}</div>
                 </div>
                 <div class="card-pips">${pipPattern}</div>
@@ -245,6 +246,11 @@ class CardResultApp {
 
     updateDeckInfo() {
         this.deckInfo.textContent = `카드 ${this.currentCardIndex + 1} / ${this.deck.length}`;
+    }
+
+    updateNavigationButtons() {
+        this.prevButton.disabled = this.currentCardIndex === 0;
+        this.nextButton.disabled = this.currentCardIndex === this.deck.length - 1;
     }
 
     // Card swiping in result screen
