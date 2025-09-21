@@ -100,6 +100,53 @@
             text-align: center;
         }
 
+        /* Pip patterns for numbered cards */
+        .card-pips {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .pip-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .pip {
+            font-size: 24px;
+            margin: 0 8px;
+        }
+
+        /* Face card styling */
+        .face-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            text-align: center;
+        }
+
+        /* Ace styling */
+        .ace-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 150px;
+            font-weight: bold;
+            text-align: center;
+        }
+
         /* Suit colors */
         .spades { color: #000; }
         .hearts { color: #ff0000; }

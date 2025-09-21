@@ -121,7 +121,8 @@ class CardResultApp {
                 </div>
                 <div class="card-center">🃏</div>
             `;
-        } else {
+        } else if (card.value === 'A') {
+            // Ace - single large symbol in center
             cardDiv.innerHTML = `
                 <div class="card-corner top-left">
                     <div>${displayValue}</div>
@@ -131,7 +132,35 @@ class CardResultApp {
                     <div>${displayValue}</div>
                     <div class="card-corner-suit">${suitSymbol}</div>
                 </div>
-                <div class="card-center">${suitSymbol}</div>
+                <div class="ace-center">${suitSymbol}</div>
+            `;
+        } else if (['J', 'Q', 'K'].includes(card.value)) {
+            // Face cards
+            const faceSymbol = this.getFaceCardSymbol(card.value);
+            cardDiv.innerHTML = `
+                <div class="card-corner top-left">
+                    <div>${displayValue}</div>
+                    <div class="card-corner-suit">${suitSymbol}</div>
+                </div>
+                <div class="card-corner bottom-right">
+                    <div>${displayValue}</div>
+                    <div class="card-corner-suit">${suitSymbol}</div>
+                </div>
+                <div class="face-card">${faceSymbol}</div>
+            `;
+        } else {
+            // Numbered cards (2-10) with pip patterns
+            const pipPattern = this.generatePipPattern(parseInt(card.value), suitSymbol);
+            cardDiv.innerHTML = `
+                <div class="card-corner top-left">
+                    <div>${displayValue}</div>
+                    <div class="card-corner-suit">${suitSymbol}</div>
+                </div>
+                <div class="card-corner bottom-right">
+                    <div>${displayValue}</div>
+                    <div class="card-corner-suit">${suitSymbol}</div>
+                </div>
+                <div class="card-pips">${pipPattern}</div>
             `;
         }
         
@@ -147,6 +176,71 @@ class CardResultApp {
             case 'joker': return '';
             default: return '';
         }
+    }
+
+    getFaceCardSymbol(value) {
+        switch (value) {
+            case 'J': return '♔'; // Jack symbol
+            case 'Q': return '♕'; // Queen symbol  
+            case 'K': return '♔'; // King symbol
+            default: return '';
+        }
+    }
+
+    generatePipPattern(count, suitSymbol) {
+        const patterns = {
+            2: [
+                [suitSymbol],
+                [suitSymbol]
+            ],
+            3: [
+                [suitSymbol],
+                [suitSymbol],
+                [suitSymbol]
+            ],
+            4: [
+                [suitSymbol, suitSymbol],
+                [suitSymbol, suitSymbol]
+            ],
+            5: [
+                [suitSymbol, suitSymbol],
+                [suitSymbol],
+                [suitSymbol, suitSymbol]
+            ],
+            6: [
+                [suitSymbol, suitSymbol],
+                [suitSymbol, suitSymbol],
+                [suitSymbol, suitSymbol]
+            ],
+            7: [
+                [suitSymbol, suitSymbol],
+                [suitSymbol],
+                [suitSymbol, suitSymbol],
+                [suitSymbol, suitSymbol]
+            ],
+            8: [
+                [suitSymbol, suitSymbol],
+                [suitSymbol, suitSymbol],
+                [suitSymbol, suitSymbol],
+                [suitSymbol, suitSymbol]
+            ],
+            9: [
+                [suitSymbol, suitSymbol, suitSymbol],
+                [suitSymbol, suitSymbol, suitSymbol],
+                [suitSymbol, suitSymbol, suitSymbol]
+            ],
+            10: [
+                [suitSymbol, suitSymbol, suitSymbol],
+                [suitSymbol, suitSymbol],
+                [suitSymbol, suitSymbol, suitSymbol],
+                [suitSymbol, suitSymbol]
+            ]
+        };
+
+        const pattern = patterns[count] || [];
+        return pattern.map(row => 
+            `<div class="pip-row">${row.map(suit => `<span class="pip">${suit}</span>`).join('')}</div>`
+        ).join('');
     }
 
     updateDeckInfo() {
